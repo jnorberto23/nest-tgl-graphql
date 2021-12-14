@@ -2,29 +2,521 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+"""Cursor for paging through collections"""
+scalar ConnectionCursor
+
+input CreateGameInput {
+  color: String!
+  description: String!
+  maxNumber: Float!
+  price: Float!
+  range: Float!
+  type: String!
+}
+
+input CreateManyGamesInput {
+  """Array of records to create"""
+  games: [CreateGameInput!]!
+}
+
+input CreateManyUsersInput {
+  """Array of records to create"""
+  users: [CreateUserInput!]!
+}
+
+input CreateOneGameInput {
+  """The record to create"""
+  game: CreateGameInput!
+}
+
+input CreateOneUserInput {
+  """The record to create"""
+  user: CreateUserInput!
+}
+
 input CreateUserInput {
-  """Example field (placeholder)"""
-  exampleField: Int!
+  email: String!
+  firstName: String!
+  lastName: String!
+  password: String!
+  username: String!
+}
+
+input CursorPaging {
+  """Paginate after opaque cursor"""
+  after: ConnectionCursor
+
+  """Paginate before opaque cursor"""
+  before: ConnectionCursor
+
+  """Paginate first"""
+  first: Int
+
+  """Paginate last"""
+  last: Int
+}
+
+input DateFieldComparison {
+  between: DateFieldComparisonBetween
+  eq: DateTime
+  gt: DateTime
+  gte: DateTime
+  in: [DateTime!]
+  is: Boolean
+  isNot: Boolean
+  lt: DateTime
+  lte: DateTime
+  neq: DateTime
+  notBetween: DateFieldComparisonBetween
+  notIn: [DateTime!]
+}
+
+input DateFieldComparisonBetween {
+  lower: DateTime!
+  upper: DateTime!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+input DeleteManyGamesInput {
+  """Filter to find records to delete"""
+  filter: GameDeleteFilter!
+}
+
+type DeleteManyResponse {
+  """The number of records deleted."""
+  deletedCount: Int!
+}
+
+input DeleteManyUsersInput {
+  """Filter to find records to delete"""
+  filter: UserDeleteFilter!
+}
+
+input DeleteOneGameInput {
+  """The id of the record to delete."""
+  id: ID!
+}
+
+input DeleteOneUserInput {
+  """The id of the record to delete."""
+  id: ID!
+}
+
+type Game {
+  color: String!
+  createdAt: DateTime!
+  description: String!
+  id: Float!
+  maxNumber: Float!
+  price: Float!
+  range: Float!
+  type: String!
+  updatedAt: DateTime!
+}
+
+type GameAggregateGroupBy {
+  createdAt: DateTime
+  id: Float
+  type: String
+  updatedAt: DateTime
+}
+
+type GameAvgAggregate {
+  id: Float
+}
+
+type GameConnection {
+  """Array of edges."""
+  edges: [GameEdge!]!
+
+  """Paging information"""
+  pageInfo: PageInfo!
+
+  """Fetch total count of records"""
+  totalCount: Int!
+}
+
+type GameCountAggregate {
+  createdAt: Int
+  id: Int
+  type: Int
+  updatedAt: Int
+}
+
+input GameDeleteFilter {
+  and: [GameDeleteFilter!]
+  createdAt: DateFieldComparison
+  id: NumberFieldComparison
+  or: [GameDeleteFilter!]
+  type: StringFieldComparison
+  updatedAt: DateFieldComparison
+}
+
+type GameDeleteResponse {
+  color: String
+  createdAt: DateTime
+  description: String
+  id: Float
+  maxNumber: Float
+  price: Float
+  range: Float
+  type: String
+  updatedAt: DateTime
+}
+
+type GameEdge {
+  """Cursor for this node."""
+  cursor: ConnectionCursor!
+
+  """The node containing the Game"""
+  node: Game!
+}
+
+input GameFilter {
+  and: [GameFilter!]
+  createdAt: DateFieldComparison
+  id: NumberFieldComparison
+  or: [GameFilter!]
+  type: StringFieldComparison
+  updatedAt: DateFieldComparison
+}
+
+type GameMaxAggregate {
+  createdAt: DateTime
+  id: Float
+  type: String
+  updatedAt: DateTime
+}
+
+type GameMinAggregate {
+  createdAt: DateTime
+  id: Float
+  type: String
+  updatedAt: DateTime
+}
+
+input GameSort {
+  direction: SortDirection!
+  field: GameSortFields!
+  nulls: SortNulls
+}
+
+enum GameSortFields {
+  createdAt
+  id
+  type
+  updatedAt
+}
+
+type GameSumAggregate {
+  id: Float
+}
+
+input GameUpdateFilter {
+  and: [GameUpdateFilter!]
+  createdAt: DateFieldComparison
+  id: NumberFieldComparison
+  or: [GameUpdateFilter!]
+  type: StringFieldComparison
+  updatedAt: DateFieldComparison
 }
 
 type Mutation {
-  createUser(createUserInput: CreateUserInput!): User!
-  removeUser(id: Int!): User!
-  updateUser(updateUserInput: UpdateUserInput!): User!
+  createManyGames(input: CreateManyGamesInput!): [Game!]!
+  createManyUsers(input: CreateManyUsersInput!): [User!]!
+  createOneGame(input: CreateOneGameInput!): Game!
+  createOneUser(input: CreateOneUserInput!): User!
+  deleteManyGames(input: DeleteManyGamesInput!): DeleteManyResponse!
+  deleteManyUsers(input: DeleteManyUsersInput!): DeleteManyResponse!
+  deleteOneGame(input: DeleteOneGameInput!): GameDeleteResponse!
+  deleteOneUser(input: DeleteOneUserInput!): UserDeleteResponse!
+  updateManyGames(input: UpdateManyGamesInput!): UpdateManyResponse!
+  updateManyUsers(input: UpdateManyUsersInput!): UpdateManyResponse!
+  updateOneGame(input: UpdateOneGameInput!): Game!
+  updateOneUser(input: UpdateOneUserInput!): User!
+}
+
+input NumberFieldComparison {
+  between: NumberFieldComparisonBetween
+  eq: Float
+  gt: Float
+  gte: Float
+  in: [Float!]
+  is: Boolean
+  isNot: Boolean
+  lt: Float
+  lte: Float
+  neq: Float
+  notBetween: NumberFieldComparisonBetween
+  notIn: [Float!]
+}
+
+input NumberFieldComparisonBetween {
+  lower: Float!
+  upper: Float!
+}
+
+type PageInfo {
+  """The cursor of the last returned record."""
+  endCursor: ConnectionCursor
+
+  """true if paging forward and there are more records."""
+  hasNextPage: Boolean
+
+  """true if paging backwards and there are more records."""
+  hasPreviousPage: Boolean
+
+  """The cursor of the first returned record."""
+  startCursor: ConnectionCursor
 }
 
 type Query {
-  user(id: Int!): User!
-  users: [User!]!
+  game(
+    """The id of the record to find."""
+    id: ID!
+  ): Game
+  games(
+    """Specify to filter the records returned."""
+    filter: GameFilter = {}
+
+    """Limit or page results."""
+    paging: CursorPaging = {first: 10}
+
+    """Specify to sort results."""
+    sorting: [GameSort!] = []
+  ): GameConnection!
+  user(
+    """The id of the record to find."""
+    id: ID!
+  ): User
+  users(
+    """Specify to filter the records returned."""
+    filter: UserFilter = {}
+
+    """Limit or page results."""
+    paging: CursorPaging = {first: 10}
+
+    """Specify to sort results."""
+    sorting: [UserSort!] = []
+  ): UserConnection!
+}
+
+"""Sort Directions"""
+enum SortDirection {
+  ASC
+  DESC
+}
+
+"""Sort Nulls Options"""
+enum SortNulls {
+  NULLS_FIRST
+  NULLS_LAST
+}
+
+input StringFieldComparison {
+  eq: String
+  gt: String
+  gte: String
+  iLike: String
+  in: [String!]
+  is: Boolean
+  isNot: Boolean
+  like: String
+  lt: String
+  lte: String
+  neq: String
+  notILike: String
+  notIn: [String!]
+  notLike: String
+}
+
+input UpdateGameInput {
+  color: String
+  description: String
+  maxNumber: Float
+  price: Float
+  range: Float
+  type: String
+}
+
+input UpdateManyGamesInput {
+  """Filter used to find fields to update"""
+  filter: GameUpdateFilter!
+
+  """The update to apply to all records found using the filter"""
+  update: UpdateGameInput!
+}
+
+type UpdateManyResponse {
+  """The number of records updated."""
+  updatedCount: Int!
+}
+
+input UpdateManyUsersInput {
+  """Filter used to find fields to update"""
+  filter: UserUpdateFilter!
+
+  """The update to apply to all records found using the filter"""
+  update: UpdateUserInput!
+}
+
+input UpdateOneGameInput {
+  """The id of the record to update"""
+  id: ID!
+
+  """The update to apply."""
+  update: UpdateGameInput!
+}
+
+input UpdateOneUserInput {
+  """The id of the record to update"""
+  id: ID!
+
+  """The update to apply."""
+  update: UpdateUserInput!
 }
 
 input UpdateUserInput {
-  """Example field (placeholder)"""
-  exampleField: Int
-  id: Int!
+  email: String
+  firstName: String
+  lastName: String
+  password: String
+  username: String
 }
 
 type User {
-  """Example field (placeholder)"""
-  exampleField: Int!
+  createdAt: DateTime!
+  email: String!
+  firstName: String!
+  id: String!
+  lastName: String!
+  password: String!
+  updatedAt: DateTime!
+  username: String!
+}
+
+type UserAggregateGroupBy {
+  createdAt: DateTime
+  email: String
+  firstName: String
+  lastName: String
+  password: String
+  updatedAt: DateTime
+  username: String
+}
+
+type UserConnection {
+  """Array of edges."""
+  edges: [UserEdge!]!
+
+  """Paging information"""
+  pageInfo: PageInfo!
+
+  """Fetch total count of records"""
+  totalCount: Int!
+}
+
+type UserCountAggregate {
+  createdAt: Int
+  email: Int
+  firstName: Int
+  lastName: Int
+  password: Int
+  updatedAt: Int
+  username: Int
+}
+
+input UserDeleteFilter {
+  and: [UserDeleteFilter!]
+  createdAt: DateFieldComparison
+  email: StringFieldComparison
+  firstName: StringFieldComparison
+  lastName: StringFieldComparison
+  or: [UserDeleteFilter!]
+  password: StringFieldComparison
+  updatedAt: DateFieldComparison
+  username: StringFieldComparison
+}
+
+type UserDeleteResponse {
+  createdAt: DateTime
+  email: String
+  firstName: String
+  id: String
+  lastName: String
+  password: String
+  updatedAt: DateTime
+  username: String
+}
+
+type UserEdge {
+  """Cursor for this node."""
+  cursor: ConnectionCursor!
+
+  """The node containing the User"""
+  node: User!
+}
+
+input UserFilter {
+  and: [UserFilter!]
+  createdAt: DateFieldComparison
+  email: StringFieldComparison
+  firstName: StringFieldComparison
+  lastName: StringFieldComparison
+  or: [UserFilter!]
+  password: StringFieldComparison
+  updatedAt: DateFieldComparison
+  username: StringFieldComparison
+}
+
+type UserMaxAggregate {
+  createdAt: DateTime
+  email: String
+  firstName: String
+  lastName: String
+  password: String
+  updatedAt: DateTime
+  username: String
+}
+
+type UserMinAggregate {
+  createdAt: DateTime
+  email: String
+  firstName: String
+  lastName: String
+  password: String
+  updatedAt: DateTime
+  username: String
+}
+
+input UserSort {
+  direction: SortDirection!
+  field: UserSortFields!
+  nulls: SortNulls
+}
+
+enum UserSortFields {
+  createdAt
+  email
+  firstName
+  lastName
+  password
+  updatedAt
+  username
+}
+
+input UserUpdateFilter {
+  and: [UserUpdateFilter!]
+  createdAt: DateFieldComparison
+  email: StringFieldComparison
+  firstName: StringFieldComparison
+  lastName: StringFieldComparison
+  or: [UserUpdateFilter!]
+  password: StringFieldComparison
+  updatedAt: DateFieldComparison
+  username: StringFieldComparison
 }

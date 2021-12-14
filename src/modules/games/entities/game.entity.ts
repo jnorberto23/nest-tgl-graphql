@@ -7,24 +7,27 @@ import {
 } from 'typeorm';
 
 @Entity()
-export class User {
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
+export class Game {
+  @PrimaryGeneratedColumn()
+  id: number;
 
   @Column()
-  firstName: string;
+  type: string;
 
   @Column()
-  lastName: string;
+  description: string;
 
   @Column()
-  email: string;
+  range: number;
+
+  @Column({ type: 'float' })
+  price: number;
 
   @Column()
-  username: string;
+  maxNumber: number;
 
   @Column()
-  password: string;
+  color: string;
 
   @CreateDateColumn()
   createdAt: Date;
