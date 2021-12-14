@@ -1,0 +1,14 @@
+services:
+  db:
+    container_name: 'nest-tgl-db'
+    image: postgres
+    environment:
+      POSTGRES_PASSWORD: ${TYPEORM_USERNAME}
+      POSTGRES_USER: ${TYPEORM_PASSWORD}
+      POSTGRES_DB: ${TYPEORM_DATABASE}
+    ports:
+      - ${TYPEORM_PORT}:${TYPEORM_PORT}
+    expose:
+      - ${TYPEORM_PORT}
+    volumes:
+       - /usr/db/var/lib/postgres
