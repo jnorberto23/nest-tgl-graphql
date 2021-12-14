@@ -1,25 +1,28 @@
 import { FilterableField } from '@nestjs-query/query-graphql';
 import { ObjectType, Field } from '@nestjs/graphql';
 
-@ObjectType('User')
-export class UserDTO {
+@ObjectType('Game')
+export class GameDTO {
+  @FilterableField()
+  id: number;
+
+  @FilterableField()
+  type: string;
+
   @Field()
-  id: string;
+  description: string;
 
-  @FilterableField()
-  firstName: string;
+  @Field()
+  range: number;
 
-  @FilterableField()
-  lastName: string;
+  @Field()
+  price: number;
 
-  @FilterableField()
-  email: string;
+  @Field()
+  maxNumber: number;
 
-  @FilterableField()
-  username: string;
-
-  @FilterableField()
-  password: string;
+  @Field()
+  color: string;
 
   @FilterableField()
   createdAt: Date;

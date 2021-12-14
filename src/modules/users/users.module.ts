@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { NestjsQueryGraphQLModule } from '@nestjs-query/query-graphql';
 import { NestjsQueryTypeOrmModule } from '@nestjs-query/query-typeorm';
 import { User } from './entities/user.entity';
-import { UserDto } from './dto/user-dto';
+import { UserDTO } from './dto/user-dto';
 import { CreateUserInput } from './dto/create-user.input';
 import { UpdateUserInput } from './dto/update-user.input';
 
@@ -12,7 +12,7 @@ import { UpdateUserInput } from './dto/update-user.input';
       imports: [NestjsQueryTypeOrmModule.forFeature([User])],
       resolvers: [
         {
-          DTOClass: UserDto,
+          DTOClass: UserDTO,
           EntityClass: User,
           CreateDTOClass: CreateUserInput,
           UpdateDTOClass: UpdateUserInput,

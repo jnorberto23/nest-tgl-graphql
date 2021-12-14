@@ -5,9 +5,28 @@
 """Cursor for paging through collections"""
 scalar ConnectionCursor
 
+input CreateGameInput {
+  color: String!
+  description: String!
+  maxNumber: Float!
+  price: Float!
+  range: Float!
+  type: String!
+}
+
+input CreateManyGamesInput {
+  """Array of records to create"""
+  games: [CreateGameInput!]!
+}
+
 input CreateManyUsersInput {
   """Array of records to create"""
   users: [CreateUserInput!]!
+}
+
+input CreateOneGameInput {
+  """The record to create"""
+  game: CreateGameInput!
 }
 
 input CreateOneUserInput {
@@ -62,6 +81,11 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 """
 scalar DateTime
 
+input DeleteManyGamesInput {
+  """Filter to find records to delete"""
+  filter: GameDeleteFilter!
+}
+
 type DeleteManyResponse {
   """The number of records deleted."""
   deletedCount: Int!
@@ -72,18 +96,168 @@ input DeleteManyUsersInput {
   filter: UserDeleteFilter!
 }
 
+input DeleteOneGameInput {
+  """The id of the record to delete."""
+  id: ID!
+}
+
 input DeleteOneUserInput {
   """The id of the record to delete."""
   id: ID!
 }
 
+type Game {
+  color: String!
+  createdAt: DateTime!
+  description: String!
+  id: Float!
+  maxNumber: Float!
+  price: Float!
+  range: Float!
+  type: String!
+  updatedAt: DateTime!
+}
+
+type GameAggregateGroupBy {
+  createdAt: DateTime
+  id: Float
+  type: String
+  updatedAt: DateTime
+}
+
+type GameAvgAggregate {
+  id: Float
+}
+
+type GameConnection {
+  """Array of edges."""
+  edges: [GameEdge!]!
+
+  """Paging information"""
+  pageInfo: PageInfo!
+
+  """Fetch total count of records"""
+  totalCount: Int!
+}
+
+type GameCountAggregate {
+  createdAt: Int
+  id: Int
+  type: Int
+  updatedAt: Int
+}
+
+input GameDeleteFilter {
+  and: [GameDeleteFilter!]
+  createdAt: DateFieldComparison
+  id: NumberFieldComparison
+  or: [GameDeleteFilter!]
+  type: StringFieldComparison
+  updatedAt: DateFieldComparison
+}
+
+type GameDeleteResponse {
+  color: String
+  createdAt: DateTime
+  description: String
+  id: Float
+  maxNumber: Float
+  price: Float
+  range: Float
+  type: String
+  updatedAt: DateTime
+}
+
+type GameEdge {
+  """Cursor for this node."""
+  cursor: ConnectionCursor!
+
+  """The node containing the Game"""
+  node: Game!
+}
+
+input GameFilter {
+  and: [GameFilter!]
+  createdAt: DateFieldComparison
+  id: NumberFieldComparison
+  or: [GameFilter!]
+  type: StringFieldComparison
+  updatedAt: DateFieldComparison
+}
+
+type GameMaxAggregate {
+  createdAt: DateTime
+  id: Float
+  type: String
+  updatedAt: DateTime
+}
+
+type GameMinAggregate {
+  createdAt: DateTime
+  id: Float
+  type: String
+  updatedAt: DateTime
+}
+
+input GameSort {
+  direction: SortDirection!
+  field: GameSortFields!
+  nulls: SortNulls
+}
+
+enum GameSortFields {
+  createdAt
+  id
+  type
+  updatedAt
+}
+
+type GameSumAggregate {
+  id: Float
+}
+
+input GameUpdateFilter {
+  and: [GameUpdateFilter!]
+  createdAt: DateFieldComparison
+  id: NumberFieldComparison
+  or: [GameUpdateFilter!]
+  type: StringFieldComparison
+  updatedAt: DateFieldComparison
+}
+
 type Mutation {
+  createManyGames(input: CreateManyGamesInput!): [Game!]!
   createManyUsers(input: CreateManyUsersInput!): [User!]!
+  createOneGame(input: CreateOneGameInput!): Game!
   createOneUser(input: CreateOneUserInput!): User!
+  deleteManyGames(input: DeleteManyGamesInput!): DeleteManyResponse!
   deleteManyUsers(input: DeleteManyUsersInput!): DeleteManyResponse!
+  deleteOneGame(input: DeleteOneGameInput!): GameDeleteResponse!
   deleteOneUser(input: DeleteOneUserInput!): UserDeleteResponse!
+  updateManyGames(input: UpdateManyGamesInput!): UpdateManyResponse!
   updateManyUsers(input: UpdateManyUsersInput!): UpdateManyResponse!
+  updateOneGame(input: UpdateOneGameInput!): Game!
   updateOneUser(input: UpdateOneUserInput!): User!
+}
+
+input NumberFieldComparison {
+  between: NumberFieldComparisonBetween
+  eq: Float
+  gt: Float
+  gte: Float
+  in: [Float!]
+  is: Boolean
+  isNot: Boolean
+  lt: Float
+  lte: Float
+  neq: Float
+  notBetween: NumberFieldComparisonBetween
+  notIn: [Float!]
+}
+
+input NumberFieldComparisonBetween {
+  lower: Float!
+  upper: Float!
 }
 
 type PageInfo {
@@ -101,6 +275,20 @@ type PageInfo {
 }
 
 type Query {
+  game(
+    """The id of the record to find."""
+    id: ID!
+  ): Game
+  games(
+    """Specify to filter the records returned."""
+    filter: GameFilter = {}
+
+    """Limit or page results."""
+    paging: CursorPaging = {first: 10}
+
+    """Specify to sort results."""
+    sorting: [GameSort!] = []
+  ): GameConnection!
   user(
     """The id of the record to find."""
     id: ID!
@@ -146,6 +334,23 @@ input StringFieldComparison {
   notLike: String
 }
 
+input UpdateGameInput {
+  color: String
+  description: String
+  maxNumber: Float
+  price: Float
+  range: Float
+  type: String
+}
+
+input UpdateManyGamesInput {
+  """Filter used to find fields to update"""
+  filter: GameUpdateFilter!
+
+  """The update to apply to all records found using the filter"""
+  update: UpdateGameInput!
+}
+
 type UpdateManyResponse {
   """The number of records updated."""
   updatedCount: Int!
@@ -159,6 +364,14 @@ input UpdateManyUsersInput {
   update: UpdateUserInput!
 }
 
+input UpdateOneGameInput {
+  """The id of the record to update"""
+  id: ID!
+
+  """The update to apply."""
+  update: UpdateGameInput!
+}
+
 input UpdateOneUserInput {
   """The id of the record to update"""
   id: ID!
@@ -170,7 +383,6 @@ input UpdateOneUserInput {
 input UpdateUserInput {
   email: String
   firstName: String
-  id: String!
   lastName: String
   password: String
   username: String
