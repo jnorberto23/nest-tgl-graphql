@@ -1,5 +1,6 @@
 import { ObjectType, Field, HideField } from '@nestjs/graphql';
 import * as bcrypt from 'bcryptjs';
+import { Bet } from 'src/modules/bets/entities/bet.entity';
 import {
   Entity,
   Column,
@@ -8,6 +9,7 @@ import {
   UpdateDateColumn,
   BeforeInsert,
   BeforeUpdate,
+  OneToMany,
 } from 'typeorm';
 
 @ObjectType()
@@ -44,6 +46,9 @@ export class User {
   @Field()
   @UpdateDateColumn()
   updatedAt: Date;
+
+  @OneToMany((type) => Bet, (user) => User)
+  bets: Bet[];
 
   @BeforeInsert()
   @BeforeUpdate()

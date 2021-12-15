@@ -2,6 +2,20 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type Bet {
+  createdAt: DateTime!
+  gameId: Float!
+  id: ID!
+  numbers: String!
+  updatedAt: DateTime!
+  userId: String!
+}
+
+input CreateBetInput {
+  gameId: Int!
+  numbers: [Int!]!
+}
+
 input CreateGameInput {
   color: String!
   description: String!
@@ -37,8 +51,10 @@ type Game {
 }
 
 type Mutation {
+  createBet(bets: [CreateBetInput!]!): [Bet!]!
   createGame(createGameInput: CreateGameInput!): Game!
   createUser(createUserInput: CreateUserInput!): User!
+  removeBet(id: Int!): Bet!
   removeGame(id: Int!): Game!
   removeUser(id: String!): User!
   updateGame(id: Int!, updateGameInput: UpdateGameInput!): Game!
@@ -46,6 +62,8 @@ type Mutation {
 }
 
 type Query {
+  bet(id: Int!): Bet!
+  bets: [Bet!]!
   game(id: Int!): Game!
   games: [Game!]!
   user(id: String!): User!

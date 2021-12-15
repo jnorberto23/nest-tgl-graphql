@@ -5,6 +5,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { join } from 'path';
 import { UsersModule } from './modules/users/users.module';
 import { GamesModule } from './modules/games/games.module';
+import { BetsModule } from './modules/bets/bets.module';
 
 @Module({
   imports: [
@@ -15,6 +16,7 @@ import { GamesModule } from './modules/games/games.module';
     TypeOrmModule.forRoot(),
     UsersModule,
     GamesModule,
+    BetsModule,
   ],
   providers: [AppService],
 })
