@@ -57,11 +57,37 @@ export class UsersService {
     return user;
   }
 
-  update(id: string, updateUserInput: UpdateUserInput) {
-    return `This action updates a #${id} user`;
+  async update(id: string, updateUserInput: UpdateUserInput) {
+    const user = await this.userRepository.findOne({
+      where: { id },
+    });
+
+    if (!user) throw new NotFoundException('Usuário não encontrado');
+
+    await this.userRepository.update(user.id, { ...updateUserInput });
+    const updatedUser = this.userRepository.create({
+      ...user,
+      ...updateUserInput,
+    });
+
+    if (!updatedUser)
+      throw new InternalServerErrorException(
+        'Ocorreu um erro ao atualizar o usuário, tente novamente mais tarde',
+      );
+
+    return updatedUser;
   }
 
-  remove(id: string) {
-    return `This action removes a #${id} user`;
+  async remove(id: string) {
+    const user = await this.userRepository.findOne({ where: { id } });
+    if (!user) throw new NotFoundException('Usuário não encontrado');
+    const userDeleted = await this.userRepository.delete({ id });
+
+    if (!userDeleted)
+      throw new InternalServerErrorException(
+        'Ocorreu um erro ao apagar o usuario, tente novamente mais tarde.',
+      );
+
+    return user;
   }
 }
