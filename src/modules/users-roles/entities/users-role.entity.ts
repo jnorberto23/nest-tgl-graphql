@@ -1,17 +1,18 @@
 import { ObjectType, Field, ID } from '@nestjs/graphql';
-import { UsersRole } from 'src/modules/users-roles/entities/users-role.entity';
+import { Role } from 'src/modules/roles/entities/role.entity';
+import { User } from 'src/modules/users/entities/user.entity';
 import {
   Entity,
   Column,
   CreateDateColumn,
   UpdateDateColumn,
   PrimaryGeneratedColumn,
-  OneToMany,
+  ManyToOne,
 } from 'typeorm';
 
 @ObjectType()
-@Entity('roles')
-export class Role {
+@Entity('userRoles')
+export class UsersRole {
   @PrimaryGeneratedColumn('increment')
   @Field(() => ID)
   id: number;
@@ -28,7 +29,11 @@ export class Role {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  @Field(() => UsersRole)
-  @OneToMany((type) => UsersRole, (role) => Role)
-  usersRole: UsersRole[];
+  @Field(() => User)
+  @ManyToOne((type) => User, (usersRole) => UsersRole)
+  user: User;
+
+  @Field(() => Role)
+  @ManyToOne((type) => Role, (usersRole) => UsersRole)
+  role: Role;
 }

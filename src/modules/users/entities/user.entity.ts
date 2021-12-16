@@ -1,6 +1,7 @@
 import { ObjectType, Field, HideField } from '@nestjs/graphql';
 import * as bcrypt from 'bcryptjs';
 import { Bet } from 'src/modules/bets/entities/bet.entity';
+import { UsersRole } from 'src/modules/users-roles/entities/users-role.entity';
 import {
   Entity,
   Column,
@@ -47,8 +48,13 @@ export class User {
   @UpdateDateColumn()
   updatedAt: Date;
 
+  @Field(() => Bet)
   @OneToMany((type) => Bet, (user) => User)
   bets: Bet[];
+
+  @Field(() => UsersRole)
+  @OneToMany((type) => UsersRole, (user) => User)
+  usersRole: UsersRole[];
 
   @BeforeInsert()
   @BeforeUpdate()

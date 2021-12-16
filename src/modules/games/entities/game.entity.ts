@@ -48,6 +48,7 @@ export class Game {
   @UpdateDateColumn()
   updatedAt: Date;
 
+  @Field(() => Bet)
   @OneToMany((type) => Bet, (game) => Game)
   bets: Bet[];
 }
