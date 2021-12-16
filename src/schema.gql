@@ -4,10 +4,12 @@
 
 type Bet {
   createdAt: DateTime!
+  game: Game!
   gameId: Float!
   id: ID!
   numbers: String!
   updatedAt: DateTime!
+  user: User!
   userId: String!
 }
 

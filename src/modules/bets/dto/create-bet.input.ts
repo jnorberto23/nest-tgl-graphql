@@ -1,6 +1,5 @@
 import { InputType, Field, Int } from '@nestjs/graphql';
-import { IsArray, IsNumber, ValidateNested } from 'class-validator';
-import { Type } from 'class-transformer';
+import { IsArray, IsNumber } from 'class-validator';
 
 @InputType()
 export class CreateBetInput {

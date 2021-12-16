@@ -38,9 +38,11 @@ export class Bet {
   @UpdateDateColumn()
   updatedAt: Date;
 
+  @Field(() => User)
   @ManyToOne((type) => User, (bets) => Bet)
   user: User;
 
-  @ManyToOne((type) => User, (games) => Game)
+  @Field(() => Game)
+  @ManyToOne((type) => Game, (games) => Game)
   game: Game;
 }
