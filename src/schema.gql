@@ -2,6 +2,12 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type AuthType {
+  role: String!
+  token: String!
+  user: User!
+}
+
 type Bet {
   createdAt: DateTime!
   game: Game!
@@ -11,6 +17,11 @@ type Bet {
   updatedAt: DateTime!
   user: User!
   userId: String!
+}
+
+input CreateAuthInput {
+  email: String!
+  password: String!
 }
 
 input CreateBetInput {
@@ -57,6 +68,7 @@ type Mutation {
   createBet(bets: [CreateBetInput!]!): [Bet!]!
   createGame(createGameInput: CreateGameInput!): Game!
   createUser(createUserInput: CreateUserInput!): User!
+  login(data: CreateAuthInput!): AuthType!
   removeBet(id: Int!): Bet!
   removeGame(id: Int!): Game!
   removeUser(id: String!): User!
