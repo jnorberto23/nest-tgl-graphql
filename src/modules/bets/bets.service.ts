@@ -29,7 +29,7 @@ export class BetsService {
       );
       const numbersCount = bets[i].numbers.length;
       bets[i].numbers = bets[i].numbers.join('-');
-      bets[i].userId = '842ae113-796f-44d3-bf65-e9633c04f218';
+      bets[i].userId = 'a86fe027-3995-4cf1-bd8e-2afaa3471a79';
       cartPrice += game.price;
 
       if (game.maxNumber !== numbersCount) {

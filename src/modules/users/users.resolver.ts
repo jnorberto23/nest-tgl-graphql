@@ -14,17 +14,20 @@ export class UsersResolver {
   createUser(@Args('createUserInput') createUserInput: CreateUserInput) {
     return this.usersService.create(createUserInput);
   }
+
   @UseGuards(GqlAuthGuard)
   @Query(() => [User], { name: 'users' })
   findAll() {
     return this.usersService.findAll();
   }
 
+  @UseGuards(GqlAuthGuard)
   @Query(() => User, { name: 'user' })
   findOne(@Args('id', { type: () => String }) id: string) {
     return this.usersService.findOne(id);
   }
 
+  @UseGuards(GqlAuthGuard)
   @Mutation(() => User)
   updateUser(
     @Args('id', { type: () => String }) id: string,
@@ -33,6 +36,7 @@ export class UsersResolver {
     return this.usersService.update(id, updateUserInput);
   }
 
+  @UseGuards(GqlAuthGuard)
   @Mutation(() => User)
   removeUser(@Args('id', { type: () => String }) id: string) {
     return this.usersService.remove(id);

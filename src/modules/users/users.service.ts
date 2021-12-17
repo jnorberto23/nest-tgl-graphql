@@ -6,6 +6,7 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { UsersRole } from '../users-roles/entities/users-role.entity';
 import { CreateUserInput } from './dto/create-user.input';
 import { UpdateUserInput } from './dto/update-user.input';
 import { User } from './entities/user.entity';
@@ -15,6 +16,8 @@ export class UsersService {
   constructor(
     @InjectRepository(User)
     private userRepository: Repository<User>,
+    @InjectRepository(UsersRole)
+    private userRolesRepository: Repository<UsersRole>,
   ) {}
 
   async create(createUserInput: CreateUserInput) {
@@ -52,8 +55,13 @@ export class UsersService {
     const user = await this.userRepository.findOne({
       where: { id },
     });
-
     if (!user) throw new NotFoundException('Nenhum usuário encontrado');
+
+    const usersRoles = await this.userRolesRepository.find({
+      where: { userId: id },
+      relations: ['role'],
+    });
+    user.usersRole = usersRoles
     return user;
   }
 

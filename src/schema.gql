@@ -119,14 +119,15 @@ type User {
   lastName: String!
   updatedAt: DateTime!
   username: String!
-  usersRole: UsersRole!
+  usersRole: [UsersRole!]!
 }
 
 type UsersRole {
   createdAt: DateTime!
   id: ID!
   role: Role!
-  type: String!
+  roleId: Float!
   updatedAt: DateTime!
   user: User!
+  userId: String!
 }

@@ -11,6 +11,7 @@ import {
   BeforeInsert,
   BeforeUpdate,
   OneToMany,
+  JoinColumn,
 } from 'typeorm';
 
 @ObjectType()
@@ -49,11 +50,11 @@ export class User {
   updatedAt: Date;
 
   @Field(() => Bet)
-  @OneToMany((type) => Bet, (user) => User)
+  @OneToMany((type) => Bet, (user) => user)
   bets: Bet[];
 
-  @Field(() => UsersRole)
-  @OneToMany((type) => UsersRole, (user) => User)
+  @Field(() => [UsersRole])
+  @OneToMany(() => UsersRole, (usersRole) => usersRole.userId)
   usersRole: UsersRole[];
 
   @BeforeInsert()

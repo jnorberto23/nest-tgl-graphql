@@ -8,10 +8,11 @@ import {
   UpdateDateColumn,
   PrimaryGeneratedColumn,
   ManyToOne,
+  JoinColumn,
 } from 'typeorm';
 
 @ObjectType()
-@Entity('userRoles')
+@Entity('usersRoles')
 export class UsersRole {
   @PrimaryGeneratedColumn('increment')
   @Field(() => ID)
@@ -19,7 +20,11 @@ export class UsersRole {
 
   @Field()
   @Column()
-  type: string;
+  userId: string;
+
+  @Field()
+  @Column()
+  roleId: number;
 
   @Field()
   @CreateDateColumn()
@@ -30,10 +35,12 @@ export class UsersRole {
   updatedAt: Date;
 
   @Field(() => User)
-  @ManyToOne((type) => User, (usersRole) => UsersRole)
+  @ManyToOne(() => User, (user) => user.usersRole)
+  @JoinColumn({ name: 'userId' })
   user: User;
 
   @Field(() => Role)
-  @ManyToOne((type) => Role, (usersRole) => UsersRole)
+  @ManyToOne(() => Role, (role) => role.usersRole)
+  @JoinColumn({ name: 'roleId' })
   role: Role;
 }

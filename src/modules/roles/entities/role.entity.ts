@@ -29,6 +29,6 @@ export class Role {
   updatedAt: Date;
 
   @Field(() => UsersRole)
-  @OneToMany((type) => UsersRole, (role) => Role)
+  @OneToMany((type) => UsersRole, (usersRole) => UsersRole)
   usersRole: UsersRole[];
 }
