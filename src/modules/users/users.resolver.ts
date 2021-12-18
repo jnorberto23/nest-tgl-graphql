@@ -5,6 +5,8 @@ import { CreateUserInput } from './dto/create-user.input';
 import { UpdateUserInput } from './dto/update-user.input';
 import { UseGuards } from '@nestjs/common';
 import { GqlAuthGuard } from '../auth/auth.guard';
+import { Role } from '../auth/roleGuard/role.enum';
+import { Roles } from '../auth/roleGuard/roles.decorator';
 
 @Resolver(() => User)
 export class UsersResolver {
@@ -17,6 +19,7 @@ export class UsersResolver {
 
   @UseGuards(GqlAuthGuard)
   @Query(() => [User], { name: 'users' })
+  @Roles(Role.Admin)
   findAll() {
     return this.usersService.findAll();
   }

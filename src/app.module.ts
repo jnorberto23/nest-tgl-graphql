@@ -7,6 +7,9 @@ import { UsersModule } from './modules/users/users.module';
 import { GamesModule } from './modules/games/games.module';
 import { BetsModule } from './modules/bets/bets.module';
 import { AuthModule } from './modules/auth/auth.module';
+import { APP_GUARD } from '@nestjs/core';
+import { RolesGuard } from './modules/auth/roleGuard/roles.guard';
+import { JwtModule } from '@nestjs/jwt';
 
 @Module({
   imports: [
@@ -20,7 +23,14 @@ import { AuthModule } from './modules/auth/auth.module';
     GamesModule,
     BetsModule,
     AuthModule,
+    JwtModule,
   ],
-  providers: [AppService],
+  providers: [
+    AppService,
+    {
+      provide: APP_GUARD,
+      useClass: RolesGuard,
+    },
+  ],
 })
 export class AppModule {}

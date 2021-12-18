@@ -29,12 +29,16 @@ export class AuthService {
     return {
       user,
       token,
-      role: 'user',
+      role: user.usersRole[0].role.type,
     };
   }
 
   private async jwtToken(user: User): Promise<string> {
-    const payload = { email: user.email, id: user.id };
+    const payload = {
+      email: user.email,
+      id: user.id,
+      role: user.usersRole[0].role.type,
+    };
     return this.jwtService.signAsync(payload);
   }
 }

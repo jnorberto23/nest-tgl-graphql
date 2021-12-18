@@ -39,7 +39,7 @@ export class Bet {
   updatedAt: Date;
 
   @Field(() => User)
-  @ManyToOne((type) => User, (bets) => Bet)
+  @ManyToOne((type) => User, (user) => User)
   user: User;
 
   @Field(() => Game)

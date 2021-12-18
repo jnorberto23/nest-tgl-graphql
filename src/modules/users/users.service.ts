@@ -58,12 +58,12 @@ export class UsersService {
     if (!user) throw new NotFoundException('Nenhum usuário encontrado');
 
     const usersRoles = await this.userRolesRepository.find({
-      where: { userId: id },
+      where: { userId: user.id },
       relations: ['role'],
     });
     user.usersRole = usersRoles
     return user;
-  }
+  } 
 
   async getByEmail(email: string) {
     const user = await this.userRepository.findOne({
@@ -71,6 +71,11 @@ export class UsersService {
     });
 
     if (!user) throw new NotFoundException('Nenhum usuário encontrado');
+    const usersRoles = await this.userRolesRepository.find({
+      where: { userId: user.id },
+      relations: ['role'],
+    });
+    user.usersRole = usersRoles
     return user;
   }
 

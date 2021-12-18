@@ -50,7 +50,7 @@ export class User {
   updatedAt: Date;
 
   @Field(() => Bet)
-  @OneToMany((type) => Bet, (user) => user)
+  @OneToMany(() => Bet, (bets) => bets.userId)
   bets: Bet[];
 
   @Field(() => [UsersRole])
