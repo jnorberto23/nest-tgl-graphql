@@ -21,18 +21,24 @@ export class BetsResolver {
 
   @UseGuards(GqlAuthGuard)
   @Query(() => [Bet], { name: 'bets' })
-  findAll() {
-    return this.betsService.findAll();
+  findAll(@GetAuthenticatedUser() user) {
+    return this.betsService.findAll(user);
   }
 
   @UseGuards(GqlAuthGuard)
   @Query(() => Bet, { name: 'bet' })
-  findOne(@Args('id', { type: () => Int }) id: number) {
-    return this.betsService.findOne(id);
+  findOne(
+    @Args('id', { type: () => Int }) id: number,
+    @GetAuthenticatedUser() user,
+  ) {
+    return this.betsService.findOne(user, id);
   }
   @UseGuards(GqlAuthGuard)
   @Mutation(() => Bet)
-  removeBet(@Args('id', { type: () => Int }) id: number) {
-    return this.betsService.remove(id);
+  removeBet(
+    @Args('id', { type: () => Int }) id: number,
+    @GetAuthenticatedUser() user,
+  ) {
+    return this.betsService.remove(user, id);
   }
 }
