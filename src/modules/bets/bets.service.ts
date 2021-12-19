@@ -20,7 +20,7 @@ export class BetsService {
     private betRepository: Repository<Bet>,
   ) {}
 
-  async create(bets) {
+  async create(user, bets) {
     let cartPrice = 0;
     for (const i in bets) {
       const game = await this.gameRepository.findOne({ id: bets[i].gameId });
@@ -29,7 +29,7 @@ export class BetsService {
       );
       const numbersCount = bets[i].numbers.length;
       bets[i].numbers = bets[i].numbers.join('-');
-      bets[i].userId = '8f1ed0ad-7556-4070-99eb-20a26435601a';
+      bets[i].userId = user.id;
       cartPrice += game.price;
 
       if (game.maxNumber !== numbersCount) {
@@ -57,15 +57,15 @@ export class BetsService {
       );
     }
 
-    const betos = await this.betRepository.create(bets);
-    const betSaved = await this.betRepository.save(betos);
+    const betCreated = await this.betRepository.create(bets);
+    const betSaved = await this.betRepository.save(betCreated);
 
     if (!betSaved)
       throw new InternalServerErrorException(
         'Ocorreu um erro ao salvar a aposta, tente novamente mais tarde',
       );
 
-    return betos;
+    return betCreated;
   }
 
   async findAll() {

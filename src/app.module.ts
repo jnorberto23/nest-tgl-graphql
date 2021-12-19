@@ -1,15 +1,14 @@
 import { Module } from '@nestjs/common';
-import { AppService } from './app.service';
 import { GraphQLModule } from '@nestjs/graphql';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { join } from 'path';
 import { UsersModule } from './modules/users/users.module';
 import { GamesModule } from './modules/games/games.module';
 import { BetsModule } from './modules/bets/bets.module';
-import { AuthModule } from './modules/auth/auth.module';
+import { AuthModule } from './modules/authentication/auth.module';
+import { AuthorizationModule } from './modules/authorization/authorization.module';
 import { APP_GUARD } from '@nestjs/core';
-import { RolesGuard } from './modules/auth/roleGuard/roles.guard';
-import { JwtModule } from '@nestjs/jwt';
+import { RolesGuard } from './modules/authorization/guards/roles.guard';
 
 @Module({
   imports: [
@@ -23,14 +22,8 @@ import { JwtModule } from '@nestjs/jwt';
     GamesModule,
     BetsModule,
     AuthModule,
-    JwtModule,
+    AuthorizationModule,
   ],
-  providers: [
-    AppService,
-    {
-      provide: APP_GUARD,
-      useClass: RolesGuard,
-    },
-  ],
+  providers: [],
 })
 export class AppModule {}

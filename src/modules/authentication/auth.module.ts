@@ -5,19 +5,22 @@ import { UsersService } from '../users/users.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from '../users/entities/user.entity';
 import { JwtModule } from '@nestjs/jwt';
-import { JwtStrategy } from './jwt.strategy';
+import { JwtStrategy } from './strategies/jwt.strategy';
 import { UsersRole } from '../users-roles/entities/users-role.entity';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([User, UsersRole]),
     JwtModule.registerAsync({
+      imports: [ConfigModule], // Missing this
       useFactory: () => ({
         secret: process.env.JWT_SECRET,
         signOptions: {
           expiresIn: '7d',
         },
       }),
+      inject: [ConfigService],
     }),
   ],
   providers: [AuthResolver, AuthService, UsersService, JwtStrategy],
