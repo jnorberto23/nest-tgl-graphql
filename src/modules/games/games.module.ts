@@ -1,26 +1,12 @@
 import { Module } from '@nestjs/common';
-import { NestjsQueryGraphQLModule } from '@nestjs-query/query-graphql';
-import { NestjsQueryTypeOrmModule } from '@nestjs-query/query-typeorm';
+import { GamesService } from './games.service';
+import { GamesResolver } from './games.resolver';
 import { Game } from './entities/game.entity';
-import { GameDTO } from '../games/dto/game-dto';
-import { CreateGameInput } from '../games/dto/create-game.input';
-import { UpdateGameInput } from '../games/dto/update-game.input';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { Cart } from '../cart/entities/cart.entity';
 
 @Module({
-  imports: [
-    NestjsQueryGraphQLModule.forFeature({
-      imports: [NestjsQueryTypeOrmModule.forFeature([Game])],
-      resolvers: [
-        {
-          DTOClass: GameDTO,
-          EntityClass: Game,
-          CreateDTOClass: CreateGameInput,
-          UpdateDTOClass: UpdateGameInput,
-          enableTotalCount: true,
-        },
-      ],
-    }),
-  ],
-  providers: [],
+  imports: [TypeOrmModule.forFeature([Game, Cart])],
+  providers: [GamesResolver, GamesService],
 })
 export class GamesModule {}

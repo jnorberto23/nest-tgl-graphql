@@ -1,45 +1,34 @@
 import { ObjectType, Field, ID } from '@nestjs/graphql';
-
 import {
   Entity,
   Column,
   CreateDateColumn,
   UpdateDateColumn,
   PrimaryGeneratedColumn,
-  OneToMany,
+  ManyToOne,
+  JoinColumn,
 } from 'typeorm';
-import { Bet } from '../../bets/entities/bet.entity';
+import { Game } from '../../games/entities/game.entity';
+import { User } from '../../users/entities/user.entity';
 
 @ObjectType()
-@Entity('games')
-export class Game {
+@Entity('bets')
+export class Bet {
   @PrimaryGeneratedColumn('increment')
   @Field(() => ID)
   id: number;
 
   @Field()
   @Column()
-  type: string;
+  numbers: string;
 
   @Field()
   @Column()
-  description: string;
+  userId: string;
 
   @Field()
   @Column()
-  range: number;
-
-  @Field()
-  @Column()
-  price: number;
-
-  @Field()
-  @Column()
-  maxNumber: number;
-
-  @Field()
-  @Column()
-  color: string;
+  gameId: number;
 
   @Field()
   @CreateDateColumn()
@@ -49,7 +38,11 @@ export class Game {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  @Field(() => Bet)
-  @OneToMany((type) => Bet, (game) => Game)
-  bets: Bet[];
+  @Field(() => User)
+  @ManyToOne((type) => User, (user) => User)
+  user: User;
+
+  @Field(() => Game)
+  @ManyToOne((type) => Game, (games) => Game)
+  game: Game;
 }
