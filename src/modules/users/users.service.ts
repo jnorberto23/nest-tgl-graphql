@@ -5,7 +5,9 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { use } from 'passport';
 import { Repository } from 'typeorm';
+import { Bet } from '../bets/entities/bet.entity';
 import { UsersRole } from '../users-roles/entities/users-role.entity';
 import { CreateUserInput } from './dto/create-user.input';
 import { UpdateUserInput } from './dto/update-user.input';
@@ -16,6 +18,8 @@ export class UsersService {
   constructor(
     @InjectRepository(User)
     private userRepository: Repository<User>,
+    @InjectRepository(Bet)
+    private betRepository: Repository<Bet>,
     @InjectRepository(UsersRole)
     private userRolesRepository: Repository<UsersRole>,
   ) {}
@@ -61,9 +65,14 @@ export class UsersService {
       where: { userId: user.id },
       relations: ['role'],
     });
-    user.usersRole = usersRoles
+    user.usersRole = usersRoles;
+    const usersBets = await this.betRepository.find({
+      where: { userId: id },
+      relations: ['game'],
+    });
+    user.bets = usersBets;
     return user;
-  } 
+  }
 
   async getByEmail(email: string) {
     const user = await this.userRepository.findOne({
@@ -75,7 +84,7 @@ export class UsersService {
       where: { userId: user.id },
       relations: ['role'],
     });
-    user.usersRole = usersRoles
+    user.usersRole = usersRoles;
     return user;
   }
 

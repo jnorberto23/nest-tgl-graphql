@@ -49,7 +49,7 @@ export class User {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  @Field(() => Bet)
+  @Field(() => [Bet])
   @OneToMany(() => Bet, (bets) => bets.userId)
   bets: Bet[];
 

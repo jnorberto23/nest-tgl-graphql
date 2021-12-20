@@ -121,7 +121,7 @@ input UpdateUserInput {
 }
 
 type User {
-  bets: Bet!
+  bets: [Bet!]!
   createdAt: DateTime!
   email: String!
   firstName: String!
