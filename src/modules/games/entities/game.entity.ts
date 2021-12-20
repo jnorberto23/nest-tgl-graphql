@@ -1,5 +1,5 @@
 import { ObjectType, Field, ID } from '@nestjs/graphql';
-import { Bet } from 'src/modules/bets/entities/bet.entity';
+
 import {
   Entity,
   Column,
@@ -8,6 +8,7 @@ import {
   PrimaryGeneratedColumn,
   OneToMany,
 } from 'typeorm';
+import { Bet } from '../../bets/entities/bet.entity';
 
 @ObjectType()
 @Entity('games')

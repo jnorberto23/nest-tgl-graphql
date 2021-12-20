@@ -1,5 +1,4 @@
 import { ObjectType, Field, ID } from '@nestjs/graphql';
-import { UsersRole } from 'src/modules/users-roles/entities/users-role.entity';
 import {
   Entity,
   Column,
@@ -8,6 +7,7 @@ import {
   PrimaryGeneratedColumn,
   OneToMany,
 } from 'typeorm';
+import { UsersRole } from '../../users-roles/entities/users-role.entity';
 
 @ObjectType()
 @Entity('roles')

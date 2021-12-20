@@ -33,11 +33,11 @@ export class UsersService {
       where: { username: createUserInput.username },
     });
 
-    if (usernameIsRegistered)
-      throw new BadRequestException('O nome de usuário já esta registrado.');
-
     if (emailIsRegistered)
       throw new BadRequestException('O email já esta registrado.');
+
+    if (usernameIsRegistered)
+      throw new BadRequestException('O nome de usuário já esta registrado.');
 
     const user = await this.userRepository.create({ ...createUserInput });
     const userSaved = await this.userRepository.save(user);
@@ -59,7 +59,7 @@ export class UsersService {
     const user = await this.userRepository.findOne({
       where: { id },
     });
-    if (!user) throw new NotFoundException('Nenhum usuário encontrado');
+    if (!user) throw new NotFoundException('Usuário não encontrado');
 
     const usersRoles = await this.userRolesRepository.find({
       where: { userId: user.id },
@@ -89,11 +89,7 @@ export class UsersService {
   }
 
   async update(id: string, updateUserInput: UpdateUserInput) {
-    const user = await this.userRepository.findOne({
-      where: { id },
-    });
-
-    if (!user) throw new NotFoundException('Usuário não encontrado');
+    const user = await this.findOne(id);
 
     await this.userRepository.update(user.id, { ...updateUserInput });
     const updatedUser = this.userRepository.create({
@@ -110,8 +106,8 @@ export class UsersService {
   }
 
   async remove(id: string) {
-    const user = await this.userRepository.findOne({ where: { id } });
-    if (!user) throw new NotFoundException('Usuário não encontrado');
+    const user = await this.findOne(id);
+    
     const userDeleted = await this.userRepository.delete({ id });
 
     if (!userDeleted)

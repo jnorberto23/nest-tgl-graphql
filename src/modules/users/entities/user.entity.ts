@@ -1,7 +1,5 @@
 import { ObjectType, Field, HideField } from '@nestjs/graphql';
 import * as bcrypt from 'bcryptjs';
-import { Bet } from 'src/modules/bets/entities/bet.entity';
-import { UsersRole } from 'src/modules/users-roles/entities/users-role.entity';
 import {
   Entity,
   Column,
@@ -13,6 +11,8 @@ import {
   OneToMany,
   JoinColumn,
 } from 'typeorm';
+import { Bet } from '../../bets/entities/bet.entity';
+import { UsersRole } from '../../users-roles/entities/users-role.entity';
 
 @ObjectType()
 @Entity('users')
@@ -30,11 +30,11 @@ export class User {
   lastName: string;
 
   @Field()
-  @Column()
+  @Column({ unique: true })
   email: string;
 
   @Field()
-  @Column()
+  @Column({ unique: true })
   username: string;
 
   @Column()
