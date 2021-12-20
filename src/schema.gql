@@ -19,6 +19,15 @@ type Bet {
   userId: String!
 }
 
+type Cart {
+  createdAt: DateTime!
+  id: ID!
+  status: Boolean!
+  type: String!
+  updatedAt: DateTime!
+  value: Float!
+}
+
 input CreateAuthInput {
   email: String!
   password: String!
@@ -79,6 +88,7 @@ type Mutation {
 type Query {
   bet(id: Int!): Bet!
   bets: [Bet!]!
+  cart: [Cart!]!
   game(id: Int!): Game!
   games: [Game!]!
   user(id: String!): User!

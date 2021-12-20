@@ -6,6 +6,7 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { Cart } from '../cart/entities/cart.entity';
 import { CreateGameInput } from './dto/create-game.input';
 import { UpdateGameInput } from './dto/update-game.input';
 import { Game } from './entities/game.entity';
@@ -15,6 +16,8 @@ export class GamesService {
   constructor(
     @InjectRepository(Game)
     private gameRepository: Repository<Game>,
+    @InjectRepository(Cart)
+    private cartRepository: Repository<Cart>,
   ) {}
 
   async create(createGameInput: CreateGameInput) {

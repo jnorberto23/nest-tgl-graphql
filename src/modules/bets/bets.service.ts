@@ -6,9 +6,9 @@ import {
 } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
-import { CreateBetInput } from './dto/create-bet.input';
 import { Bet } from './entities/bet.entity';
 import { Game } from '../games/entities/game.entity';
+import { CartService } from '../cart/cart.service';
 
 @Injectable()
 export class BetsService {
@@ -18,10 +18,13 @@ export class BetsService {
 
     @InjectRepository(Bet)
     private betRepository: Repository<Bet>,
+
+    private cartService: CartService,
   ) {}
 
   async create(user, bets) {
     let cartPrice = 0;
+    const cartMinValue = await this.cartService.findAll();
     for (const i in bets) {
       const game = await this.gameRepository.findOne({ id: bets[i].gameId });
       const numberOutOfRange = bets[i].numbers.some(
@@ -51,7 +54,7 @@ export class BetsService {
       }
     }
 
-    if (cartPrice < 5) {
+    if (cartPrice < cartMinValue[0].value) {
       throw new BadRequestException(
         'Impossivel salvar aposta, pois o preço total do carrinho é inferior ao preço minimo de aposta',
       );
@@ -68,10 +71,11 @@ export class BetsService {
     return betCreated;
   }
 
-  async findAll() {
+  async findAll(user) {
     try {
       const bets = await this.betRepository.find({
         relations: ['game'],
+        where: { userId: user.id },
       });
       if (!bets.length)
         throw new NotFoundException('Nenhuma aposta foi encontrada.');
@@ -81,21 +85,25 @@ export class BetsService {
     }
   }
 
-  async findOne(id: number) {
+  async findOne(user, id: number) {
     try {
       const bet = await this.betRepository.findOne({
         where: { id },
         relations: ['game'],
       });
       if (!bet) throw new NotFoundException('Aposta não encontrada.');
+      if (bet.userId !== user.id)
+        throw new BadRequestException('Essa aposta pertence a outro usuário.');
       return bet;
     } catch (err) {
       throw new InternalServerErrorException(err);
     }
   }
 
-  async remove(id: number) {
-    const bet = await this.findOne(id);
+  async remove(user, id: number) {
+    const bet = await this.findOne(user, id);
+    if (bet.userId !== user.id)
+      throw new BadRequestException('Essa aposta pertence a outro usuário.');
 
     const betDeleted = await this.betRepository.delete({ id });
 
