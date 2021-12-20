@@ -47,6 +47,11 @@ export class UsersService {
         'Ocorreu um erro ao salvar o usuário, tente novamente mais tarde',
       );
 
+    const userRoles = await this.userRolesRepository.create({
+      roleId: 1,
+      userId: user.id,
+    });
+    await this.userRolesRepository.save(userRoles);
     return user;
   }
 
@@ -107,7 +112,7 @@ export class UsersService {
 
   async remove(id: string) {
     const user = await this.findOne(id);
-    
+
     const userDeleted = await this.userRepository.delete({ id });
 
     if (!userDeleted)
