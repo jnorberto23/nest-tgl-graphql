@@ -99,8 +99,8 @@ describe('UsersService', () => {
       mockRepository.create.mockReturnValue(user);
       const savedUser = await service.create(user);
       expect(savedUser).toMatchObject(user);
-      expect(mockRepository.create).toBeCalledTimes(1);
-      expect(mockRepository.save).toBeCalledTimes(1);
+      expect(mockRepository.create).toBeCalledTimes(2);
+      expect(mockRepository.save).toBeCalledTimes(2);
     });
     it('should return a exception when email is registered', async () => {
       const user = TestUtil.giveMeAValidUser();

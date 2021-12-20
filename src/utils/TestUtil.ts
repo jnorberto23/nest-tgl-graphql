@@ -1,4 +1,5 @@
 /* eslint-disable prettier/prettier */
+import { Bet } from '../modules/bets/entities/bet.entity';
 import { Game } from '../modules/games/entities/game.entity';
 import { User } from '../modules/users/entities/user.entity';
 
@@ -24,5 +25,24 @@ export default class TestUtil {
     game.maxNumber = 15;
     game.color = '#7F3992';
     return game;
+  }
+
+  static giveMeAValidBet(){
+    let bet = []
+    bet = [
+      {gameId: 1, numbers: [1, 2, 3, 5, 6, 8, 8,5,1,5,51,5,3,32,52]},
+			{gameId: 1, numbers: [1, 2, 3, 5, 6, 8, 8,5,1,5,51,5,3,32,52]},
+			{gameId: 1, numbers: [1, 2, 3, 5, 6, 0, 8,5,1,5,51,5,3,32,52]},
+			{gameId: 1, numbers: [1, 2, 3, 5, 6, 0, 8,5,1,5,51,5,3,32,52]},
+			{gameId: 1, numbers: [1, 2, 3, 5, 6, 0, 8,5,1,5,51,5,3,32,52]},
+			{gameId: 1, numbers: [1, 2, 3, 5, 6, 0, 8,5,1,5,51,5,3,32,52]},
+			{gameId: 1, numbers: [1, 2, 3, 5, 6, 0, 8,5,1,5,51,5,3,32,52]},
+			{gameId: 1, numbers: [1, 2, 3, 5, 6, 0, 8,5,1,5,51,5,3,32,52]},
+			{gameId: 1, numbers: [1, 2, 3, 5, 6, 0, 8,5,1,5,51,5,3,32,52]},
+			{gameId: 1, numbers: [1, 2, 3, 5, 6, 0, 8,5,1,5,51,5,3,32,52]},
+			{gameId: 1, numbers: [1, 2, 3, 5, 6, 0, 8,5,1,5,51,5,3,32,52]},
+			{gameId: 1, numbers: [1, 2, 3, 5, 6, 0, 8,5,1,5,51,5,3,32,52]},
+    ]
+    return bet
   }
 }
