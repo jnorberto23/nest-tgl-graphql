@@ -1,4 +1,26 @@
+version: "3.9"  # optional since v1.27.0
+networks:
+  tgl:
+    external: true
+
 services:
+  app:
+    container_name: 'nest-tgl-app'
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: yarn start:dev
+    image: nest-tgl
+    volumes:
+      - .:/usr/tgl
+      - /usr/tgl/node_modules # anonymous volume for node_modules only
+    networks:
+      - tgl
+    ports:
+      - '3000:3000'
+    depends_on:
+      - db
+
   db:
     container_name: 'nest-tgl-db'
     image: postgres
@@ -10,5 +32,7 @@ services:
       - ${TYPEORM_PORT}:${TYPEORM_PORT}
     expose:
       - ${TYPEORM_PORT}
+    networks:
+      - tgl
     volumes:
        - /usr/db/var/lib/postgres
