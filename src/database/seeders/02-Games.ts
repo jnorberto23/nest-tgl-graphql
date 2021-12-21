@@ -1,6 +1,5 @@
 /* eslint-disable prettier/prettier */
 import { Connection } from 'typeorm';
-import { User } from '../../modules/users/entities/user.entity';
 import { Factory, Seeder } from 'typeorm-seeding';
 import { Game } from '../../modules/games/entities/game.entity';
 

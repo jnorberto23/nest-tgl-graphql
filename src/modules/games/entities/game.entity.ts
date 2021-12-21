@@ -50,6 +50,6 @@ export class Game {
   updatedAt: Date;
 
   @Field(() => Bet)
-  @OneToMany((type) => Bet, (game) => Game)
+  @OneToMany(() => Bet, (game) => Game)
   bets: Bet[];
 }

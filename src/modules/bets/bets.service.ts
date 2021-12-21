@@ -9,6 +9,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Bet } from './entities/bet.entity';
 import { Game } from '../games/entities/game.entity';
 import { CartService } from '../cart/cart.service';
+import MailDelivery from '../../services/mailer/MailDelivery';
 
 @Injectable()
 export class BetsService {
@@ -33,6 +34,7 @@ export class BetsService {
       const numbersCount = bets[i].numbers.length;
       bets[i].numbers = bets[i].numbers.join('-');
       bets[i].userId = user.id;
+      bets[i].price = game.price;
       cartPrice += game.price;
 
       if (game.maxNumber !== numbersCount) {
@@ -67,6 +69,13 @@ export class BetsService {
       throw new InternalServerErrorException(
         'Ocorreu um erro ao salvar a aposta, tente novamente mais tarde',
       );
+
+    await new MailDelivery().send(
+      user,
+      { bets, cartPrice },
+      'newBets',
+      'Relatório de apostas',
+    );
 
     return betCreated;
   }

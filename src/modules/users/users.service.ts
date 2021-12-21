@@ -5,8 +5,8 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { use } from 'passport';
 import { Repository } from 'typeorm';
+import MailDelivery from '../../services/mailer/MailDelivery';
 import { Bet } from '../bets/entities/bet.entity';
 import { UsersRole } from '../users-roles/entities/users-role.entity';
 import { CreateUserInput } from './dto/create-user.input';
@@ -52,6 +52,7 @@ export class UsersService {
       userId: user.id,
     });
     await this.userRolesRepository.save(userRoles);
+    await new MailDelivery().send(user, { user }, 'newUser', 'Boas vindas');
     return user;
   }
 
