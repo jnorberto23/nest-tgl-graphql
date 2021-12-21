@@ -7,7 +7,6 @@ import { UsersRole } from '../../modules/users-roles/entities/users-role.entity'
 export default class CreateUsers implements Seeder {
   public async run(factory: Factory, connection: Connection): Promise<any> {
     const users = await factory(User)().createMany(2);
-    console.log(users);
     if (users) {
       await connection
         .createQueryBuilder()

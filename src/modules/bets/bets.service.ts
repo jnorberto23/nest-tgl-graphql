@@ -34,7 +34,7 @@ export class BetsService {
       const numbersCount = bets[i].numbers.length;
       bets[i].numbers = bets[i].numbers.join('-');
       bets[i].userId = user.id;
-      bets[i].price = game.price
+      bets[i].price = game.price;
       cartPrice += game.price;
 
       if (game.maxNumber !== numbersCount) {

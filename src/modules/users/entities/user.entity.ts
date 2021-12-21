@@ -9,7 +9,6 @@ import {
   BeforeInsert,
   BeforeUpdate,
   OneToMany,
-  JoinColumn,
 } from 'typeorm';
 import { Bet } from '../../bets/entities/bet.entity';
 import { UsersRole } from '../../users-roles/entities/users-role.entity';

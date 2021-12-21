@@ -7,8 +7,6 @@ import { GamesModule } from './modules/games/games.module';
 import { BetsModule } from './modules/bets/bets.module';
 import { AuthModule } from './modules/authentication/auth.module';
 import { AuthorizationModule } from './modules/authorization/authorization.module';
-import { APP_GUARD } from '@nestjs/core';
-import { RolesGuard } from './modules/authorization/guards/roles.guard';
 import { CartModule } from './modules/cart/cart.module';
 
 @Module({

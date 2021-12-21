@@ -1,11 +1,6 @@
-import {
-  BadRequestException,
-  InternalServerErrorException,
-  NotFoundException,
-} from '@nestjs/common';
+import { InternalServerErrorException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
-import { use } from 'passport';
 import TestUtil from '../../utils/TestUtil';
 import { CartService } from '../cart/cart.service';
 import { Cart } from '../cart/entities/cart.entity';

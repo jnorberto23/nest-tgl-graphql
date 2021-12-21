@@ -6,7 +6,6 @@ import {
   UpdateDateColumn,
   PrimaryGeneratedColumn,
   ManyToOne,
-  JoinColumn,
 } from 'typeorm';
 import { Game } from '../../games/entities/game.entity';
 import { User } from '../../users/entities/user.entity';
@@ -39,10 +38,10 @@ export class Bet {
   updatedAt: Date;
 
   @Field(() => User)
-  @ManyToOne((type) => User, (user) => User)
+  @ManyToOne(() => User, (user) => User)
   user: User;
 
   @Field(() => Game)
-  @ManyToOne((type) => Game, (games) => Game)
+  @ManyToOne(() => Game, (games) => Game)
   game: Game;
 }

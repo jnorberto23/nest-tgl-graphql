@@ -1,7 +1,12 @@
 import Producer from '../kafka/Producer';
 
 export default class MailDelivery {
-  public async send(user, messageParams: {}, topic: string, subject: string) {
+  public async send(
+    user,
+    messageParams: Record<string, unknown>,
+    topic: string,
+    subject: string,
+  ) {
     const message = {
       user: user,
       subject: subject,

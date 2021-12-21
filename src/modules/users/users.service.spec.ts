@@ -105,7 +105,6 @@ describe('UsersService', () => {
     it('should return a exception when email is registered', async () => {
       const user = TestUtil.giveMeAValidUser();
       user.username = 'testeuser123';
-      console.log(user);
       mockRepository.findOne.mockReturnValue(user);
       await service.create(user).catch((e) => {
         expect(e).toBeInstanceOf(BadRequestException);
